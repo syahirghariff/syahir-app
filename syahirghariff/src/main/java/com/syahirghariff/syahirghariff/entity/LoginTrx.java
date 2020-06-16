@@ -19,31 +19,25 @@ import javax.persistence.TemporalType;
  * @author syahirghariff
  */
 @Entity
-@Table(name = "MAIN_USER")
-public class MainUser implements Serializable{
+@Table(name = "LOGIN_TRX")
+public class LoginTrx implements Serializable{
     
     @Id
-    @Column(name="MU_ID")
-    private String id;
+    @Column(name="LT_ID")
+    private String id; 
     
-    @Column(name="MU_USERNAME")
+    @Column(name="LT_USERNAME")
     private String username; 
     
-    @Column(name="MU_PASSWORD")
+    @Column(name="LT_PASSWORD")
     private String password; 
     
-    @Column(name="MU_TOKEN")
-    private String token; 
-    
-    @Column(name="MU_ROLE")
-    private String role; 
-    
-    @Column(name="MU_ACTIVE")
-    private String active;
-    
-    @Column(name="MU_INSERT_DATE")
+    @Column(name="LT_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date insertDate;
+    private Date insertDate; 
+
+    public LoginTrx() {
+    }
 
     public String getId() {
         return id;
@@ -68,30 +62,6 @@ public class MainUser implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public void setToken(String token){
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
 
     public Date getInsertDate() {
         return insertDate;
@@ -103,6 +73,9 @@ public class MainUser implements Serializable{
 
     @Override
     public String toString() {
-        return "MainUser{" + "id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", active=" + active + ", insertDate=" + insertDate + '}';
+        return "LoginTrx{" + "id=" + id + ", username=" + username + ", password=" + password + ", insertDate=" + insertDate + '}';
     }
+    
+    
+    
 }

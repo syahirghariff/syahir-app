@@ -5,17 +5,12 @@
  */
 package com.syahirghariff.syahirghariff.service;
 
-import com.syahirghariff.syahirghariff.entity.Profile;
-import java.util.List;
-
 /**
  *
  * @author syahirghariff
  */
-public interface ProfileService {
+public interface IPService {
     
-    public List<Profile> saveOrUpdate (List<Profile> req);
     
-    public List<Profile> findAll();
-    
+    public void getUserIp();
 }

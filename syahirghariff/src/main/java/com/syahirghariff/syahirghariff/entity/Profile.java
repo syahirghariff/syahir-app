@@ -5,6 +5,7 @@
  */
 package com.syahirghariff.syahirghariff.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -39,6 +41,7 @@ public class Profile implements Serializable {
     private String svg; 
     
     @Column(name="P_IMAGE")
+    @JsonIgnore
     private Blob image; 
     
     @Column(name="P_ACTIVE")
@@ -47,6 +50,12 @@ public class Profile implements Serializable {
     @Column(name="P_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date insertDate;
+    
+    @Transient
+    private String token;
+    
+    @Transient 
+    private String encodeImg; 
 
     public Profile() {
     }
@@ -107,6 +116,22 @@ public class Profile implements Serializable {
         this.insertDate = insertDate;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getEncodeImg() {
+        return encodeImg;
+    }
+
+    public void setEncodeImg(String encodeImg) {
+        this.encodeImg = encodeImg;
+    }
+    
     @Override
     public String toString() {
         return "Profile{" + "id=" + id + ", type=" + type + ", name=" + name + ", svg=" + svg + ", image=" + image + ", active=" + active + ", insertDate=" + insertDate + '}';

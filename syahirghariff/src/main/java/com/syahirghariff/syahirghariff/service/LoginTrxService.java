@@ -5,17 +5,13 @@
  */
 package com.syahirghariff.syahirghariff.service;
 
-import com.syahirghariff.syahirghariff.entity.Profile;
-import java.util.List;
+import com.syahirghariff.syahirghariff.entity.LoginTrx;
 
 /**
  *
  * @author syahirghariff
  */
-public interface ProfileService {
+public interface LoginTrxService {
     
-    public List<Profile> saveOrUpdate (List<Profile> req);
-    
-    public List<Profile> findAll();
-    
+    public LoginTrx createTrx(String username, String password);
 }

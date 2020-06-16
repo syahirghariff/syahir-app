@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * @author syahirghariff
  */
 @Entity
-@Table(name = "JobDetail")
+@Table(name = "JOB_DETAIL")
 public class JobDetail implements Serializable {
 
     @Id
@@ -36,7 +36,7 @@ public class JobDetail implements Serializable {
     @Column(name = "JD_POST")
     private Clob post;
 
-    @Column(name = "JD_POST")
+    @Column(name = "JD_PROJECT")
     private String project;
 
     @Column(name = "JD_ACTIVE")
