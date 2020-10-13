@@ -16,10 +16,9 @@ public interface TechService {
     
     public List<Tech> findAll();
     
-    public List<Tech> findAllActive();
+    public List<Tech> saveOrUpdate(List<Tech> tech); 
     
-    public Tech saveOrUpdate(Tech tech); 
+    public boolean deleteById (String id);
     
-    public Tech deactivate(Tech tech);
     
 }

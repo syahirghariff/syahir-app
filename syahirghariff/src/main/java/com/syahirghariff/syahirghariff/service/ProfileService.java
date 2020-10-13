@@ -18,4 +18,8 @@ public interface ProfileService {
     
     public List<Profile> findAll();
     
+    public Profile findById(String id);
+    
+    public boolean deleteById(String id);
+    
 }

@@ -6,22 +6,16 @@
 package com.syahirghariff.syahirghariff.dao;
 
 import com.syahirghariff.syahirghariff.entity.Profile;
-import com.syahirghariff.syahirghariff.serviceimpl.ProfileServiceImpl;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.Base64;
-import java.util.Date;
+import com.syahirghariff.syahirghariff.entity.Profile_;
 import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.sql.rowset.serial.SerialBlob;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,37 +31,7 @@ public class ProfileDao {
 
     public Profile saveOrUpdate(Profile req) {
 
-        Profile profile = new Profile();
-        profile.setActive(req.getActive());
-        profile.setInsertDate(new Date());
-        profile.setName(req.getName().trim());
-        profile.setType(req.getType().trim());
-            
-        // If id is null
-        if (req.getId() == null) {
-            profile.setId(UUID.randomUUID().toString());
-        } else {
-            profile.setId(req.getId());
-        }
-
-        // If profile image
-        if (req.getEncodeImg() != null) {
-            try {
-                byte[] decodeByte = Base64.getDecoder().decode(req.getEncodeImg());
-                Blob blob = new SerialBlob(decodeByte);
-                profile.setImage(blob);
-                profile.setEncodeImg(req.getEncodeImg());
-            } catch (SQLException ex) {
-                Logger.getLogger(ProfileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        // If svg
-        if (req.getSvg() != null) {
-            profile.setSvg(req.getSvg().trim());
-        }
-        
-
+        Profile profile = Profile.create(req);
         Session session = em.unwrap(Session.class);
         session.saveOrUpdate(profile);
 
@@ -84,6 +48,37 @@ public class ProfileDao {
         
         TypedQuery<Profile> tq = em.createQuery(cq);
         return tq.getResultList();
+    }
+    
+    public void deleteById (String id) {
+        
+        Session currentSession = em.unwrap(Session.class); 
+        
+        Query query = currentSession.createQuery("delete from Profile where id=:id"); 
+        query.setParameter("id", id);
+        
+        query.executeUpdate();
+    }
+    
+    public Profile findById (String id) {
+        
+        CriteriaBuilder cb = em.getCriteriaBuilder(); 
+        CriteriaQuery<Profile> cq = cb.createQuery(Profile.class);
+        Root<Profile> from = cq.from(Profile.class);
+        Predicate pred = cb.equal(from.get(Profile_.id), id);
+        
+        cq.select(from).where(pred);
+        
+        TypedQuery<Profile> tq = em.createQuery(cq);
+        
+        List<Profile> res = tq.getResultList(); 
+        
+        if (!res.isEmpty()){
+            return res.get(0);
+        }
+        
+        return null;
+    
     }
 
 }

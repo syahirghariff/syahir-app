@@ -6,9 +6,9 @@
 package com.syahirghariff.syahirghariff.rest;
 
 import com.syahirghariff.syahirghariff.dto.Constants;
-import com.syahirghariff.syahirghariff.entity.Profile;
+import com.syahirghariff.syahirghariff.entity.Tech;
 import com.syahirghariff.syahirghariff.service.MainUserService;
-import com.syahirghariff.syahirghariff.service.ProfileService;
+import com.syahirghariff.syahirghariff.service.TechService;
 import com.syahirghariff.syahirghariff.util.RespUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +25,23 @@ import org.springframework.web.bind.annotation.RestController;
  * @author syahirghariff
  */
 @RestController
-@RequestMapping("/profile")
-public class ProfileRestController {
+@RequestMapping("/tech")
+public class TechRestController {
 
     @Autowired
-    private ProfileService profileSvc;
+    private TechService techSvc;
 
     @Autowired
     private MainUserService mainUserSvc;
 
     @PostMapping("/do_submit")
-    public ResponseEntity doSubmit(@RequestHeader(value = Constants.AUTHORIZATION) String auth, @RequestBody List<Profile> req) {
+    public ResponseEntity doSubmit(@RequestHeader(value = Constants.AUTHORIZATION) String auth, @RequestBody List<Tech> req) {
 
         if (!mainUserSvc.authenticate(auth)) {
             return RespUtil.unauthorized();
         }
 
-        return RespUtil.successResponse(profileSvc.saveOrUpdate(req));
-    }
-
-    @GetMapping("/find_all")
-    public ResponseEntity findAll() {
-        return RespUtil.successResponse(profileSvc.findAll());
+        return RespUtil.successResponse(techSvc.saveOrUpdate(req));
     }
 
     @PostMapping("/delete_by_id")
@@ -56,11 +51,16 @@ public class ProfileRestController {
             return RespUtil.unauthorized();
         }
 
-        ResponseEntity responseEntity = profileSvc.deleteById(id)
-                ? RespUtil.successResponse(profileSvc.findAll())
-                : RespUtil.notFound("Profile with id of " + id + " cannot be found");
+        ResponseEntity responseEntity = techSvc.deleteById(id)
+                ? RespUtil.successResponse(techSvc.findAll())
+                : RespUtil.notFound("Tech with id of " + id + " cannot be found");
 
         return responseEntity;
+    }
+
+    @GetMapping("/find_all")
+    public ResponseEntity findAll() {
+        return RespUtil.successResponse(techSvc.findAll());
     }
 
 }

@@ -6,7 +6,6 @@
 package com.syahirghariff.syahirghariff.rest;
 
 import com.syahirghariff.syahirghariff.entity.MainUser;
-import com.syahirghariff.syahirghariff.service.IPService;
 import com.syahirghariff.syahirghariff.service.MainUserService;
 import com.syahirghariff.syahirghariff.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,9 @@ public class UserRestController {
 
     @Autowired
     private MainUserService mainUserSvc;
-    
-    @Autowired
-    private IPService ipSvc;
 
     @PostMapping("/do_login")
     public ResponseEntity doLogin(@RequestBody MainUser user) {
-        ipSvc.getUserIp();
         return RespUtil.successResponse(mainUserSvc.doLogin(user));
     }
 

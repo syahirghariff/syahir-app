@@ -7,12 +7,14 @@ package com.syahirghariff.syahirghariff.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  *
@@ -20,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="TECH")
-public class Tech implements Serializable{
+public class Tech extends Base implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -30,6 +32,9 @@ public class Tech implements Serializable{
     
     @Column(name="T_TYPE")
     private String type; 
+    
+    @Column(name="T_SEQ")
+    private Integer seq; 
     
     @Column(name="T_NAME")
     private String name; 
@@ -71,6 +76,14 @@ public class Tech implements Serializable{
         this.name = name;
     }
 
+    public Integer getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
+
     public String getSvg() {
         return svg;
     }
@@ -98,6 +111,20 @@ public class Tech implements Serializable{
     @Override
     public String toString() {
         return "Tech{" + "id=" + id + ", type=" + type + ", name=" + name + ", svg=" + svg + ", active=" + active + ", insertDate=" + insertDate + '}';
+    }
+    
+    public static Tech create (Tech req){
+    
+        Tech tech = new Tech();
+        tech.id = UUID.randomUUID().toString();
+        tech.type = Strings.trimToNull(req.getType());
+        tech.seq = req.seq;
+        tech.name = Strings.trimToNull(req.getName());
+        tech.svg = Strings.trimToNull(req.getSvg());
+        tech.active = Strings.trimToNull(req.getActive());
+        tech.insertDate = new Date();
+        
+        return tech;
     }
     
 }

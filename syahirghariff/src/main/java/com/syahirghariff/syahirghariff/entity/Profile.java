@@ -6,56 +6,54 @@
 package com.syahirghariff.syahirghariff.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.syahirghariff.syahirghariff.util.ImageEncodeDecodeUtil;
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  *
  * @author syahirghariff
  */
 @Entity
-@Table(name="PROFILE")
-public class Profile implements Serializable {
-    
+@Table(name = "PROFILE")
+public class Profile extends Base implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @Column(name="P_ID")
-    private String id; 
-    
-    @Column(name="P_TYPE")
-    private String type; 
-    
-    @Column(name="P_NAME")
+    @Column(name = "P_ID")
+    private String id;
+
+    @Column(name = "P_TYPE")
+    private String type;
+
+    @Column(name = "P_NAME")
     private String name;
-    
-    @Column(name="P_SVG")
-    private String svg; 
-    
-    @Column(name="P_IMAGE")
+
+    @Column(name = "P_SVG")
+    private String svg;
+
+    @Column(name = "P_IMAGE")
     @JsonIgnore
-    private Blob image; 
-    
-    @Column(name="P_ACTIVE")
+    private Blob image;
+
+    @Column(name = "P_ACTIVE")
     private String active;
-    
-    @Column(name="P_INSERT_DATE")
+
+    @Column(name = "P_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date insertDate;
-    
-    @Transient
-    private String token;
-    
-    @Transient 
-    private String encodeImg; 
 
     public Profile() {
     }
@@ -116,25 +114,36 @@ public class Profile implements Serializable {
         this.insertDate = insertDate;
     }
 
-    public String getToken() {
-        return token;
-    }
+    public static Profile create(Profile req) {
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getEncodeImg() {
-        return encodeImg;
-    }
-
-    public void setEncodeImg(String encodeImg) {
-        this.encodeImg = encodeImg;
+        Profile profile = new Profile();
+        profile.id = req.getId() != null ? req.getId() : UUID.randomUUID().toString();
+        profile.active = Strings.trimToNull(req.getActive());
+        profile.insertDate = new Date();
+        profile.name = Strings.trimToNull(req.getName().trim());
+        profile.type = Strings.trimToNull(req.getType().trim());
+        profile.image = req.getEncodeImg() != null ? ImageEncodeDecodeUtil.base64ToBlob(req.getEncodeImg()) : null;
+        profile.encodeImg = Strings.trimToNull(req.getEncodeImg());
+        profile.svg = Strings.trimToNull(req.getSvg());
+        
+        return profile;
     }
     
+    public static List<Profile> load(List<Profile> req) {
+        
+        List<Profile> res = new ArrayList<>();
+        
+        req.stream().forEach(profile -> {
+            profile.encodeImg = profile.image != null ? ImageEncodeDecodeUtil.blobToBase64(profile.image) : null;;
+            res.add(profile);
+        });
+        
+        return res;
+    }
+
     @Override
     public String toString() {
         return "Profile{" + "id=" + id + ", type=" + type + ", name=" + name + ", svg=" + svg + ", image=" + image + ", active=" + active + ", insertDate=" + insertDate + '}';
     }
-    
+
 }

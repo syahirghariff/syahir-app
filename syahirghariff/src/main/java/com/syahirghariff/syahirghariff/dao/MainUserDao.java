@@ -55,11 +55,7 @@ public class MainUserDao {
         
         List<MainUser> result = query.getResultList();
 
-        if (!result.isEmpty()) {
-            return true;
-        }
-
-        return false;
+        return !result.isEmpty();
         
     }
 

@@ -6,12 +6,17 @@
 package com.syahirghariff.syahirghariff.dao;
 
 import com.syahirghariff.syahirghariff.entity.Education;
+import com.syahirghariff.syahirghariff.entity.Education_;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,9 +33,48 @@ public class EducationDao{
 
         Session session = em.unwrap(Session.class);
 
-        Query<Education> query = session.createQuery("from Education where ", Education.class);
+        Query<Education> query = session.createQuery("from Education", Education.class);
 
         return query.getResultList();
+    }
+    
+    public Education saveOrUpdate(Education req) {
+
+        Education education = Education.create(req);
+        Session session = em.unwrap(Session.class);
+        session.saveOrUpdate(education);
+
+        return education;
+    }
+    
+    public void deleteById(String id) {
+        Session currentSession = em.unwrap(Session.class); 
+        
+        Query query = currentSession.createQuery("delete from Education where id=:id"); 
+        query.setParameter("id", id);
+        
+        query.executeUpdate();
+    }
+    
+    public Education findById (String id) {
+        
+        CriteriaBuilder cb = em.getCriteriaBuilder(); 
+        CriteriaQuery<Education> cq = cb.createQuery(Education.class);
+        Root<Education> from = cq.from(Education.class);
+        Predicate pred = cb.equal(from.get(Education_.id), id);
+        
+        cq.select(from).where(pred);
+        
+        TypedQuery<Education> tq = em.createQuery(cq);
+        
+        List<Education> res = tq.getResultList(); 
+        
+        if (!res.isEmpty()){
+            return res.get(0);
+        }
+        
+        return null;
+    
     }
 
 }

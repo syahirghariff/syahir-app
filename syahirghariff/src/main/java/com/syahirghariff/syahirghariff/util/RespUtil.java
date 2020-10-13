@@ -29,4 +29,21 @@ public class RespUtil {
         return ResponseEntity.ok(res);
     }
     
+    public static ResponseEntity notFound(Object content){
+    
+        Map res = new HashMap<>();
+        res.put("status", HttpStatus.NOT_FOUND);
+        res.put("content", content);
+        
+        return ResponseEntity.ok(res);
+    }
+    
+    public static ResponseEntity unauthorized() {
+        Map res = new HashMap<>();
+        res.put("status", HttpStatus.UNAUTHORIZED);
+        res.put("content", "Sorry, unauthorized user");
+        
+        return ResponseEntity.ok(res);
+    }
+    
 }

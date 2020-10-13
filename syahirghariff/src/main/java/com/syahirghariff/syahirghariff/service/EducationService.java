@@ -13,13 +13,13 @@ import java.util.List;
  * @author syahirghariff
  */
 public interface EducationService {
-    
+
     public List<Education> findAll();
-        
-    public Education findById(String id); 
     
-    public Education saveOrUpdate(Education education);
-    
-    public Education deactivate(String id);
-    
+    public boolean deleteById (String id);
+
+    public Education findById(String id);
+
+    public List <Education> saveOrUpdate(List<Education> educations);
+
 }

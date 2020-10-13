@@ -5,12 +5,15 @@
  */
 package com.syahirghariff.syahirghariff.service;
 
+import com.syahirghariff.syahirghariff.entity.IpUser;
+
 /**
  *
  * @author syahirghariff
  */
-public interface IPService {
-    
-    
+public interface IpUserService {
+
     public void getUserIp();
+    
+    public IpUser save(IpUser ipUser);
 }
