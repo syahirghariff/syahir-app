@@ -22,7 +22,7 @@ import org.apache.logging.log4j.util.Strings;
  */
 @Entity
 @Table(name="TECH")
-public class Tech extends Base implements Serializable{
+public class Tech implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -116,7 +116,7 @@ public class Tech extends Base implements Serializable{
     public static Tech create (Tech req){
     
         Tech tech = new Tech();
-        tech.id = UUID.randomUUID().toString();
+        tech.id = req.getId() != null ? Strings.trimToNull(req.getId()) : UUID.randomUUID().toString();
         tech.type = Strings.trimToNull(req.getType());
         tech.seq = req.seq;
         tech.name = Strings.trimToNull(req.getName());

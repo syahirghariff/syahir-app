@@ -73,7 +73,7 @@ public class TechDao {
 
         Session session = em.unwrap(Session.class);
 
-        Query<Tech> query = session.createQuery("from Tech order by seq asc", Tech.class);
+        Query<Tech> query = session.createQuery("from Tech order by type, seq asc", Tech.class);
 
         return query.getResultList();
     }
