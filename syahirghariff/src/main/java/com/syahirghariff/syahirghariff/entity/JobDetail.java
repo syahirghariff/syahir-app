@@ -6,15 +6,20 @@
 package com.syahirghariff.syahirghariff.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.syahirghariff.syahirghariff.enums.StatusEnum;
 import java.io.Serializable;
-import java.sql.Clob;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  *
@@ -29,21 +34,43 @@ public class JobDetail implements Serializable {
     private String id;
 
     @JsonIgnore
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "JD_J_ID")
     private Job job;
 
     @Column(name = "JD_POST")
-    private Clob post;
-
-    @Column(name = "JD_PROJECT")
-    private String project;
+    @Lob
+    private String post;
 
     @Column(name = "JD_ACTIVE")
-    private String active;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum active;
 
     @Column(name = "JD_INSERT_DATE")
     private Date insertDate;
+    
+    public JobDetail() {
+    }
+    
+    public static JobDetail create (JobDetail req) {
+        
+        JobDetail jobDetail = new JobDetail(); 
+        jobDetail.id = req != null && req.getId() != null ? req.getId() : UUID.randomUUID().toString();
+        jobDetail.post = req != null ? Strings.trimToNull(req.getPost()) : null;
+        jobDetail.active = req != null ? req.getActive() : StatusEnum.A; 
+        jobDetail.insertDate = new Date();
+        jobDetail.job = req != null && req.getJob() != null ? req.getJob() : null;
+        
+        return jobDetail;
+    }
+    
+    public static JobDetail prepare(Job job, JobDetail req) {
+    
+        JobDetail jobDetail = JobDetail.create(req);
+        jobDetail.job = job != null? job : null;
+        
+        return jobDetail; 
+    }
 
     public String getId() {
         return id;
@@ -61,32 +88,14 @@ public class JobDetail implements Serializable {
         this.job = job;
     }
 
-    public Clob getPost() {
+    public String getPost() {
         return post;
     }
 
-    public void setPost(Clob post) {
+    public void setPost(String post) {
         this.post = post;
     }
-
-    public String getProject() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project = project;
-    }
-
     
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
     public Date getInsertDate() {
         return insertDate;
     }
@@ -95,9 +104,18 @@ public class JobDetail implements Serializable {
         this.insertDate = insertDate;
     }
 
+    public StatusEnum getActive() {
+        return active;
+    }
+
+    public void setActive(StatusEnum active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "JobDetail{" + "id=" + id + ", job=" + job + ", post=" + post + ", active=" + active + ", insertDate=" + insertDate + '}';
     }
-
+    
+    
 }

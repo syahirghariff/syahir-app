@@ -7,7 +7,6 @@ package com.syahirghariff.syahirghariff.service;
 
 import com.syahirghariff.syahirghariff.entity.Job;
 import com.syahirghariff.syahirghariff.entity.JobDetail;
-import java.util.List;
 
 /**
  *
@@ -15,10 +14,8 @@ import java.util.List;
  */
 public interface JobDetailService {
     
-    public List<JobDetail> findByJob(Job job);
+    public JobDetail saveJobDetail(JobDetail jobDetail);
     
-    public JobDetail saveOrUpdate(JobDetail jobDetail); 
-    
-    public JobDetail deactivate(JobDetail jobDetail);
+    public boolean deleteByJob (Job job);
     
 }

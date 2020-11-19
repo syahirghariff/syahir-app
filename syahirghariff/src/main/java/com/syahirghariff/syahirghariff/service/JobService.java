@@ -16,10 +16,8 @@ public interface JobService {
     
     public List<Job> findAll();
     
-    public Job findById (String id);
+    public List<Job> saveOrUpdate(List<Job> job);
     
-    public Job saveOrUpdate(Job job);
-    
-    public Job deactivate(String id);
+    public boolean deleteById (String id);
     
 }
