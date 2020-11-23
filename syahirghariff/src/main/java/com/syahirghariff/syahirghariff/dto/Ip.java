@@ -5,7 +5,10 @@
  */
 package com.syahirghariff.syahirghariff.dto;
 
+import com.syahirghariff.syahirghariff.entity.IpUser;
 import java.math.BigDecimal;
+import java.util.Date;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  *
@@ -16,14 +19,33 @@ public class Ip {
     private String ip; 
     private String city;
     private String region; 
-    private String country_name; 
+    private String country; 
     private BigDecimal latitude;
     private BigDecimal longitude; 
-    private String postal; 
-    private String org; 
+    private String postcode; 
+    private String internetProvider; 
+    private Date date; 
 
     public Ip() {
     }
+    
+    public static Ip load (IpUser req){
+        
+        Ip ipUser = new Ip();
+        ipUser.ip = Strings.trimToNull(req.getIp());
+        ipUser.city = Strings.trimToNull(req.getCity());
+        ipUser.region = Strings.trimToNull(req.getRegion());
+        ipUser.country = Strings.trimToNull(req.getCountry());
+        ipUser.latitude = req.getLatitude() != null ? req.getLatitude() : null;
+        ipUser.longitude = req.getLatitude() != null ? req.getLongitude() : null; 
+        ipUser.postcode = Strings.trimToNull(req.getPostal());
+        ipUser.internetProvider = Strings.trimToNull(req.getInternetProvider());
+        ipUser.date = req.getInsertDate() != null ? req.getInsertDate() : null;
+        
+        return ipUser;
+    
+    }
+    
 
     public String getIp() {
         return ip;
@@ -49,30 +71,6 @@ public class Ip {
         this.region = region;
     }
 
-    public String getCountry_name() {
-        return country_name;
-    }
-
-    public void setCountry_name(String country_name) {
-        this.country_name = country_name;
-    }
-
-    public String getPostal() {
-        return postal;
-    }
-
-    public void setPostal(String postal) {
-        this.postal = postal;
-    }
-
-    public String getOrg() {
-        return org;
-    }
-
-    public void setOrg(String org) {
-        this.org = org;
-    }
-
     public BigDecimal getLatitude() {
         return latitude;
     }
@@ -89,9 +87,42 @@ public class Ip {
         this.longitude = longitude;
     }
 
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getInternetProvider() {
+        return internetProvider;
+    }
+
+    public void setInternetProvider(String internetProvider) {
+        this.internetProvider = internetProvider;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
-        return "Ip{" + "ip=" + ip + ", city=" + city + ", region=" + region + ", country_name=" + country_name + ", latitude=" + latitude + ", longitude=" + longitude + ", postal=" + postal + ", org=" + org + '}';
+        return "Ip{" + "ip=" + ip + ", city=" + city + ", region=" + region + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", postcode=" + postcode + ", internetProvider=" + internetProvider + '}';
     }
+    
     
 }

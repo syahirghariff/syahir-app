@@ -5,6 +5,7 @@
  */
 package com.syahirghariff.syahirghariff.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class IpUser {
 
     @Id
     @Column(name="IU_ID")
+    @JsonIgnore
     private String id; 
     
     @Column(name="IU_IP")
@@ -63,6 +65,22 @@ public class IpUser {
     
     
     public IpUser(){
+    }
+    
+    public static IpUser load (IpUser req) {
+        
+        IpUser ipUser = new IpUser();
+        ipUser.ip = Strings.trimToNull(req.getIp());
+        ipUser.city = Strings.trimToNull(req.getCity());
+        ipUser.region = Strings.trimToNull(req.getRegion());
+        ipUser.country = Strings.trimToNull(req.getCountry());
+        ipUser.latitude = req.getLatitude() != null ? req.getLatitude() : null;
+        ipUser.longitude = req.getLatitude() != null ? req.getLongitude() : null; 
+        ipUser.postal = Strings.trimToNull(req.getPostal());
+        ipUser.internetProvider = Strings.trimToNull(req.getInternetProvider());
+        ipUser.insertDate = req.getInsertDate() != null ? req.getInsertDate() : null;
+        
+        return ipUser;
     }
 
     public String getId() {

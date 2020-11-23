@@ -5,7 +5,9 @@
  */
 package com.syahirghariff.syahirghariff.service;
 
+import com.syahirghariff.syahirghariff.dto.Ip;
 import com.syahirghariff.syahirghariff.entity.IpUser;
+import java.util.List;
 
 /**
  *
@@ -16,4 +18,6 @@ public interface IpUserService {
     public void getUserIp();
     
     public IpUser save(IpUser ipUser);
+    
+    public List<Ip> findAll(); 
 }

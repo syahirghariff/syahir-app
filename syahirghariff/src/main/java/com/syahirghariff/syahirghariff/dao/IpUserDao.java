@@ -6,8 +6,10 @@
 package com.syahirghariff.syahirghariff.dao;
 
 import com.syahirghariff.syahirghariff.entity.IpUser;
+import java.util.List;
 import javax.persistence.EntityManager;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +31,13 @@ public class IpUserDao {
 
         return ipUser;
     
+    }
+    
+    public List<IpUser> findAll() {
+    
+        Session session = em.unwrap(Session.class);
+        Query<IpUser> query  = session.createQuery("from IpUser ", IpUser.class);
+        return query.getResultList(); 
     }
     
 }

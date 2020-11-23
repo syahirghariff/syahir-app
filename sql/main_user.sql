@@ -10,3 +10,8 @@ CREATE TABLE `MAIN_USER` (
     `MU_INSERT_DATE` DATETIME DEFAULT NULL,
     PRIMARY KEY (`MU_ID`)
 )
+
+
+
+// Sample password 
+{bcrypt}$2a$10$RqIAnyrcdhkT3qLDOEKWHeDojInCV4QIL67Ghw1fIcDUhKlgo4g6W
