@@ -59,12 +59,26 @@ public class IpUser {
     private String internetProvider;
     
     @Column(name = "IU_INSERT_DATE")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date insertDate;
     
     
     public IpUser(){
+    }
+    
+    public IpUser(String ip, String city, String country, Date insertDate, String internetProvider, BigDecimal latitude, BigDecimal longitude, String postal, String region ) {
+    
+        this.ip = ip; 
+        this.city = city; 
+        this.country = country;
+        this.insertDate = insertDate; 
+        this.internetProvider = internetProvider; 
+        this.latitude = latitude; 
+        this.longitude = longitude; 
+        this.postal = postal; 
+        this.region = region; 
+    
     }
     
     public static IpUser load (IpUser req) {

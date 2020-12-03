@@ -5,6 +5,7 @@
  */
 package com.syahirghariff.syahirghariff.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.syahirghariff.syahirghariff.entity.IpUser;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,6 +25,8 @@ public class Ip {
     private BigDecimal longitude; 
     private String postcode; 
     private String internetProvider; 
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private Date date; 
 
     public Ip() {

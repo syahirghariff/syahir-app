@@ -33,9 +33,10 @@ public class IpUserRestController {
     @GetMapping("/find_all")
     public ResponseEntity findAll(@RequestHeader(value = Constants.AUTHORIZATION) String auth) {
 
-        if (!mainUserSvc.authenticate(auth)) {
-            return RespUtil.unauthorized();
-        }
+//        if (!mainUserSvc.authenticate(auth)) {
+//            return RespUtil.unauthorized();
+//        }
+        
         return RespUtil.successResponse(ipUserSvc.findAll());
     }
     

@@ -73,7 +73,7 @@ public class IpUserServiceImpl implements IpUserService {
         
         List<Ip> result = new ArrayList<>();
         
-        ipUserDao.findAll().stream().forEach((ipUser) -> {
+        ipUserDao.findIpList().stream().forEach((ipUser) -> {
             result.add(Ip.load(ipUser));
         });
         
