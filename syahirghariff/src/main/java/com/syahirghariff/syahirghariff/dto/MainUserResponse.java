@@ -12,18 +12,19 @@ package com.syahirghariff.syahirghariff.dto;
 public class MainUserResponse {
     
     private String userToken; 
-    private boolean login; 
-
-    public MainUserResponse(String userToken, boolean login) {
-        this.userToken = userToken;
-        this.login = login;
-    }
-    
-    public MainUserResponse(boolean login){
-        this.login = login;
-    }
+    private String role; 
     
     public MainUserResponse(){
+    }
+    
+    public MainUserResponse(String usertoken, String role) {
+        this.userToken = usertoken; 
+        this.role = role;
+    }
+    
+    public MainUserResponse(String role){
+    
+        this.role = role;
     }
 
     public String getUserToken() {
@@ -34,16 +35,17 @@ public class MainUserResponse {
         this.userToken = userToken;
     }
 
-    public boolean isLogin() {
-        return login;
+    public String getRole() {
+        return role;
     }
 
-    public void setLogin(boolean login) {
-        this.login = login;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
-        return "MainUserResponse{" + "userToken=" + userToken + ", login=" + login + '}';
+        return "MainUserResponse{" + "userToken=" + userToken + ", role=" + role + '}';
     }
+    
 }

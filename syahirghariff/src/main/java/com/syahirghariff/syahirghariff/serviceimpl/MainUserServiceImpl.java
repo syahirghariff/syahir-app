@@ -9,9 +9,11 @@ import com.syahirghariff.syahirghariff.dao.MainUserDao;
 import com.syahirghariff.syahirghariff.dto.Constants;
 import com.syahirghariff.syahirghariff.dto.MainUserResponse;
 import com.syahirghariff.syahirghariff.entity.MainUser;
+import com.syahirghariff.syahirghariff.enums.StatusEnum;
 import com.syahirghariff.syahirghariff.service.IpUserService;
 import com.syahirghariff.syahirghariff.service.LoginTrxService;
 import com.syahirghariff.syahirghariff.service.MainUserService;
+import com.syahirghariff.syahirghariff.util.RespUtil;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -21,6 +23,7 @@ import java.util.logging.Logger;
 import javax.transaction.Transactional;
 import javax.xml.bind.DatatypeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -42,35 +45,41 @@ public class MainUserServiceImpl implements MainUserService {
 
     @Override
     @Transactional
-    public MainUserResponse doLogin(MainUser req) {
+    public ResponseEntity doLogin(MainUser req) {
+        
+        String username = req.getUsername().trim();
+        String password = req.getPassword().trim();
 
-        MainUserResponse res = new MainUserResponse(false);
+        // Find MainUser 
+        MainUser user = this.findUser(username);
 
-        if (req.getUsername() != null && req.getPassword() != null) {
-            String username = req.getUsername().toLowerCase().trim();
-            String password = req.getPassword().trim();
+        if (user != null && user.getActive().equals(StatusEnum.A)) {
 
-            // Find MainUser 
-            MainUser user = this.findUser(username);
+            // Caclulat password 
+            boolean isPasswordCorrect = BCrypt.checkpw(password, user.getPassword());
 
-            if (user != null) {
-                boolean isPasswordCorrect = BCrypt.checkpw(password, user.getPassword());
+            if (isPasswordCorrect) {
 
-                if (isPasswordCorrect) {
-                    return new MainUserResponse(this.generateToken(user), true);
-                } else {
-                    ipUserSvc.getUserIp();
-                    loginTrxSvc.createTrx(username, password);
+                switch (user.getRole()) {
+                
+                    case "MASTER":
+                        return RespUtil.successResponse(new MainUserResponse(this.generateToken(user), user.getRole()));
+                        
+                    default: 
+                        loginTrxSvc.createTrx(username, password);
+                        return RespUtil.successResponse(new MainUserResponse(user.getRole()));
                 }
+                
 
             } else {
-                ipUserSvc.getUserIp();
                 loginTrxSvc.createTrx(username, password);
+                return RespUtil.unauthorized();
             }
 
+        } else {
+            loginTrxSvc.createTrx(username, password);
+            return RespUtil.unauthorized();
         }
-
-        return res;
     }
 
     @Override

@@ -5,10 +5,13 @@
  */
 package com.syahirghariff.syahirghariff.entity;
 
+import com.syahirghariff.syahirghariff.enums.StatusEnum;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,7 +42,8 @@ public class MainUser implements Serializable{
     private String role; 
     
     @Column(name="MU_ACTIVE")
-    private String active;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum active;
     
     @Column(name="MU_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -85,11 +89,11 @@ public class MainUser implements Serializable{
         this.role = role;
     }
 
-    public String getActive() {
+    public StatusEnum getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(StatusEnum active) {
         this.active = active;
     }
 

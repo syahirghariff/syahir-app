@@ -5,8 +5,8 @@
  */
 package com.syahirghariff.syahirghariff.service;
 
-import com.syahirghariff.syahirghariff.dto.MainUserResponse;
 import com.syahirghariff.syahirghariff.entity.MainUser;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -14,7 +14,7 @@ import com.syahirghariff.syahirghariff.entity.MainUser;
  */
 public interface MainUserService {
     
-    public MainUserResponse doLogin(MainUser user); 
+    public ResponseEntity doLogin(MainUser user); 
         
     public MainUser findUser(String username); 
     
