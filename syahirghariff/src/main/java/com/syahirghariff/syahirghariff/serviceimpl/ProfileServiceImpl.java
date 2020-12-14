@@ -67,7 +67,6 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public List<Profile> display() {
-        ipUserSvc.getClass();
         return Profile.display(profileDao.display());
     }
     
