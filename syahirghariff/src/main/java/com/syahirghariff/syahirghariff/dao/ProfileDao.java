@@ -50,6 +50,16 @@ public class ProfileDao {
         return tq.getResultList();
     }
     
+    public List<Profile> display() {
+        
+       Session currentSession = em.unwrap(Session.class); 
+       
+       Query query = currentSession.createQuery("from Profile where active='A'");
+       
+       return query.getResultList();
+    
+    }
+    
     public void deleteById (String id) {
         
         Session currentSession = em.unwrap(Session.class); 

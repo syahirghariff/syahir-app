@@ -42,6 +42,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
+    public List<Job> display() {
+        return Job.display(jobDao.display());
+    }
+    
+    @Override
     @Transactional
     public boolean deleteById(String id) {
         

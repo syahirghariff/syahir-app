@@ -6,6 +6,8 @@
 package com.syahirghariff.syahirghariff.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.syahirghariff.syahirghariff.util.ImageEncodeDecodeUtil;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -33,15 +35,19 @@ public class Profile extends Base implements Serializable {
 
     @Id
     @Column(name = "P_ID")
+    @JsonInclude(Include.NON_NULL)
     private String id;
 
     @Column(name = "P_TYPE")
+    @JsonInclude(Include.NON_NULL)
     private String type;
 
     @Column(name = "P_NAME")
+    @JsonInclude(Include.NON_NULL)
     private String name;
 
     @Column(name = "P_SVG")
+    @JsonInclude(Include.NON_NULL)
     private String svg;
 
     @Column(name = "P_IMAGE")
@@ -49,10 +55,12 @@ public class Profile extends Base implements Serializable {
     private Blob image;
 
     @Column(name = "P_ACTIVE")
+    @JsonInclude(Include.NON_NULL)
     private String active;
 
     @Column(name = "P_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonInclude(Include.NON_NULL)
     private Date insertDate;
 
     public Profile() {
@@ -134,13 +142,29 @@ public class Profile extends Base implements Serializable {
         List<Profile> res = new ArrayList<>();
         
         req.stream().forEach(profile -> {
-            profile.encodeImg = profile.image != null ? ImageEncodeDecodeUtil.blobToBase64(profile.image) : null;;
+            profile.encodeImg = profile.image != null ? ImageEncodeDecodeUtil.blobToBase64(profile.image) : null;
             res.add(profile);
         });
         
         return res;
     }
-
+    
+    public static List<Profile> display(List<Profile> req){
+    
+        List<Profile> res = new ArrayList<>();
+        
+        req.stream().forEach(profile -> {
+            profile.encodeImg = profile.image != null ? ImageEncodeDecodeUtil.blobToBase64(profile.image) : null;
+            profile.id = null;
+            profile.insertDate = null;
+            profile.active = null; 
+            
+            res.add(profile);
+        });
+        
+        return res;
+    
+    }
     @Override
     public String toString() {
         return "Profile{" + "id=" + id + ", type=" + type + ", name=" + name + ", svg=" + svg + ", image=" + image + ", active=" + active + ", insertDate=" + insertDate + '}';

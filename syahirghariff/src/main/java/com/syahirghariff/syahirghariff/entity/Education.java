@@ -6,6 +6,7 @@
 package com.syahirghariff.syahirghariff.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.syahirghariff.syahirghariff.util.ImageEncodeDecodeUtil;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -34,18 +35,23 @@ public class Education extends Base implements Serializable {
 
     @Id
     @Column(name = "E_ID")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
 
     @Column(name = "E_NAME")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
 
     @Column(name = "E_COURSE")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String course;
 
     @Column(name = "E_YEAR")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String year;
 
     @Column(name = "E_ACTIVE")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String active;
 
     @Column(name = "E_IMAGE")
@@ -55,6 +61,7 @@ public class Education extends Base implements Serializable {
     @Column(name = "E_INSERT_DATE")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date insertDate;
 
     public Education() {
@@ -145,6 +152,24 @@ public class Education extends Base implements Serializable {
         education.encodeImg = Strings.trimToNull(req.getEncodeImg());
 
         return education;
+    }
+    
+    public static List<Education> display(List<Education> req) {
+        
+        List<Education> res = new ArrayList<>();
+        
+        req.stream().forEach(education -> {
+            education.encodeImg = education.image != null ? ImageEncodeDecodeUtil.blobToBase64(education.image) : null;
+            education.id = null;
+            education.insertDate = null;
+            education.active = null; 
+            
+            res.add(education);
+        });
+        
+        return res;
+    
+    
     }
 
 }

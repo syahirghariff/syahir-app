@@ -77,4 +77,13 @@ public class TechDao {
 
         return query.getResultList();
     }
+    
+    public List<Tech> display() {
+
+        Session session = em.unwrap(Session.class);
+
+        Query<Tech> query = session.createQuery("from Tech where active='A' order by type, seq asc", Tech.class);
+
+        return query.getResultList();
+    }
 }

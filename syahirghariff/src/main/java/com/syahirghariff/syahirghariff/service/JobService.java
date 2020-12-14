@@ -16,6 +16,8 @@ public interface JobService {
     
     public List<Job> findAll();
     
+    public List<Job> display();
+    
     public List<Job> saveOrUpdate(List<Job> job);
     
     public boolean deleteById (String id);

@@ -49,6 +49,12 @@ public class JobRestController {
 
         return RespUtil.successResponse(jobSvc.findAll());
     }
+    
+    @GetMapping("/display")
+    public ResponseEntity display() {
+
+        return RespUtil.successResponse(jobSvc.display());
+    }
 
     @PostMapping("/delete_by_id")
     public ResponseEntity deleteById(@RequestHeader(value = Constants.AUTHORIZATION) String auth, @RequestBody String id) {

@@ -62,5 +62,11 @@ public class TechRestController {
     public ResponseEntity findAll() {
         return RespUtil.successResponse(techSvc.findAll());
     }
+    
+    @GetMapping("/display")
+    public ResponseEntity display() {
+        return RespUtil.successResponse(techSvc.display());
+    }
+
 
 }

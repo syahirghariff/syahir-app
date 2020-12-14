@@ -7,6 +7,7 @@ package com.syahirghariff.syahirghariff.serviceimpl;
 
 import com.syahirghariff.syahirghariff.dao.ProfileDao;
 import com.syahirghariff.syahirghariff.entity.Profile;
+import com.syahirghariff.syahirghariff.service.IpUserService;
 import com.syahirghariff.syahirghariff.service.ProfileService;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private ProfileDao profileDao;
+    
+    @Autowired
+    private IpUserService ipUserSvc;
 
     @Override
     @Transactional
@@ -60,6 +64,14 @@ public class ProfileServiceImpl implements ProfileService {
     public Profile findById(String id) {
         return profileDao.findById(id);
     }
+
+    @Override
+    public List<Profile> display() {
+        ipUserSvc.getClass();
+        return Profile.display(profileDao.display());
+    }
+    
+    
 
     @Override
     @Transactional

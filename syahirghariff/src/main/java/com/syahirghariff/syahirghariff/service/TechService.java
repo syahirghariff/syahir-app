@@ -16,6 +16,8 @@ public interface TechService {
     
     public List<Tech> findAll();
     
+    public List<Tech> display();
+    
     public List<Tech> saveOrUpdate(List<Tech> tech); 
     
     public boolean deleteById (String id);

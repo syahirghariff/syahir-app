@@ -38,6 +38,16 @@ public class EducationDao{
         return query.getResultList();
     }
     
+    public List<Education> display () {
+    
+        Session session = em.unwrap(Session.class);
+        
+        Query<Education> query = session.createQuery("from Education where active='A' order by insertDate asc", Education.class);
+        
+        return query.getResultList();
+    
+    }
+    
     public Education saveOrUpdate(Education req) {
 
         Education education = Education.create(req);

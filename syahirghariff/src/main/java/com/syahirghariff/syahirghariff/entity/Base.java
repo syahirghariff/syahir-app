@@ -5,6 +5,8 @@
  */
 package com.syahirghariff.syahirghariff.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import javax.persistence.Transient;
 
 /**
@@ -14,6 +16,7 @@ import javax.persistence.Transient;
 abstract class Base {
     
     @Transient
+    @JsonInclude(Include.NON_NULL)
     protected String encodeImg; 
 
     public Base() {

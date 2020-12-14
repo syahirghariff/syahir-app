@@ -6,6 +6,7 @@
 package com.syahirghariff.syahirghariff.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.syahirghariff.syahirghariff.enums.StatusEnum;
 import java.io.Serializable;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class JobDetail implements Serializable {
 
     @Id
     @Column(name = "JD_ID")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
 
     @JsonIgnore
@@ -40,13 +42,16 @@ public class JobDetail implements Serializable {
 
     @Column(name = "JD_POST")
     @Lob
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String post;
 
     @Column(name = "JD_ACTIVE")
     @Enumerated(EnumType.STRING)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private StatusEnum active;
 
     @Column(name = "JD_INSERT_DATE")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date insertDate;
     
     public JobDetail() {
@@ -60,6 +65,15 @@ public class JobDetail implements Serializable {
         jobDetail.active = req != null ? req.getActive() : StatusEnum.A; 
         jobDetail.insertDate = new Date();
         jobDetail.job = req != null && req.getJob() != null ? req.getJob() : null;
+        
+        return jobDetail;
+    }
+    
+    public static JobDetail display (JobDetail jobDetail) {
+        
+        jobDetail.id = null;
+        jobDetail.insertDate = null; 
+        jobDetail.active = null;
         
         return jobDetail;
     }

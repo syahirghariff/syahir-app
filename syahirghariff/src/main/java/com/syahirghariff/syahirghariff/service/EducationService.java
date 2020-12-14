@@ -17,6 +17,8 @@ public interface EducationService {
     public List<Education> findAll();
     
     public boolean deleteById (String id);
+    
+    public List<Education> display();
 
     public Education findById(String id);
 

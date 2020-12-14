@@ -5,8 +5,11 @@
  */
 package com.syahirghariff.syahirghariff.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,25 +31,32 @@ public class Tech implements Serializable{
     
     @Id
     @Column(name="T_ID")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id; 
     
     @Column(name="T_TYPE")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String type; 
     
     @Column(name="T_SEQ")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer seq; 
     
     @Column(name="T_NAME")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name; 
     
     @Column(name="T_SVG")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String svg; 
     
     @Column(name="T_ACTIVE")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String active; 
     
     @Column(name="T_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date insertDate; 
 
     public Tech() {
@@ -125,6 +135,20 @@ public class Tech implements Serializable{
         tech.insertDate = new Date();
         
         return tech;
+    }
+    
+    public static List<Tech> display (List<Tech> req) {
+    
+        List<Tech> res = new ArrayList<>();
+        
+        req.stream().forEach(tech-> {
+            tech.id = null;
+            tech.insertDate = null;
+            tech.active = null;
+            
+            res.add(tech);
+        });
+        return res; 
     }
     
 }

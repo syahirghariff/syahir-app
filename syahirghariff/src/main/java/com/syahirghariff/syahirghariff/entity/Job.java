@@ -6,11 +6,14 @@
 package com.syahirghariff.syahirghariff.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.syahirghariff.syahirghariff.enums.StatusEnum;
 import com.syahirghariff.syahirghariff.util.ImageEncodeDecodeUtil;
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,9 +37,11 @@ public class Job extends Base implements Serializable {
     
     @Id
     @Column(name="J_ID")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id; 
     
     @Column(name="J_COMPANY_NAME")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String companyName; 
     
     @Column(name="J_IMAGE")
@@ -44,17 +49,21 @@ public class Job extends Base implements Serializable {
     private Blob image;
     
     @Column(name="J_TITLE")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String title; 
     
     @Column(name="J_YEAR")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String year;
     
     @Column(name="J_ACTIVE")
     @Enumerated(EnumType.STRING)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private StatusEnum active; 
     
     @Column(name="J_INSERT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date insertDate;
     
     @OneToOne(mappedBy = "job", cascade = CascadeType.ALL)
@@ -101,6 +110,27 @@ public class Job extends Base implements Serializable {
         job.jobDetail = req.getJobDetail() != null ? req.getJobDetail() : null;
         
         return job;
+    }
+    
+    public static List<Job> display (List<Job> req) {
+    
+        
+        List<Job> res = new ArrayList<>(); 
+        
+        req.stream().forEach(job -> {
+            
+            job.encodeImg = job.getImage() != null ? ImageEncodeDecodeUtil.blobToBase64(job.getImage()) : null;
+            job.id = null; 
+            job.active = null;
+            job.insertDate = null; 
+            
+            job.jobDetail = JobDetail.display(job.jobDetail);
+            
+            res.add(job);
+        
+        });
+        
+        return res;
     }
     
     public String getId() {

@@ -31,6 +31,13 @@ public class TechServiceImpl implements TechService {
     }
 
     @Override
+    public List<Tech> display() {
+        return Tech.display(techDao.display());
+    }
+    
+    
+
+    @Override
     @Transactional
     public List<Tech> saveOrUpdate(List<Tech> req) {
         List<Tech> res = new ArrayList<>();

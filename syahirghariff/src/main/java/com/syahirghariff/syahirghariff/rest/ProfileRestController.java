@@ -48,6 +48,11 @@ public class ProfileRestController {
     public ResponseEntity findAll() {
         return RespUtil.successResponse(profileSvc.findAll());
     }
+    
+    @GetMapping("/display")
+    public ResponseEntity display() {
+        return RespUtil.successResponse(profileSvc.display());
+    }
 
     @PostMapping("/delete_by_id")
     public ResponseEntity deleteById(@RequestHeader(value = Constants.AUTHORIZATION) String auth, @RequestBody String id) {

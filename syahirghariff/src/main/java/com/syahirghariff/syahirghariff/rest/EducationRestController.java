@@ -38,6 +38,11 @@ public class EducationRestController {
     public ResponseEntity findAll() {
         return RespUtil.successResponse(educationSvc.findAll());
     }
+    
+    @GetMapping("/display")
+    public ResponseEntity display() {
+        return RespUtil.successResponse(educationSvc.display());
+    }
 
     @PostMapping("/do_submit")
     public ResponseEntity doSubmit(@RequestHeader(value = Constants.AUTHORIZATION) String auth, @RequestBody List<Education> req) {

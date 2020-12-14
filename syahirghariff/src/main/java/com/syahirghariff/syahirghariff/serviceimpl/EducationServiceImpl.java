@@ -57,6 +57,13 @@ public class EducationServiceImpl implements EducationService {
     }
 
     @Override
+    public List<Education> display() {
+        return Education.display(educationDao.display());
+    }
+    
+    
+
+    @Override
     @Transactional
     public boolean deleteById(String id) {
 

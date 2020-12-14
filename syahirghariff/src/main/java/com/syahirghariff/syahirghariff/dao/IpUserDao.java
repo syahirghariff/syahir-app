@@ -7,11 +7,13 @@ package com.syahirghariff.syahirghariff.dao;
 
 import com.syahirghariff.syahirghariff.entity.IpUser;
 import com.syahirghariff.syahirghariff.entity.IpUser_;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -50,12 +52,15 @@ public class IpUserDao {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(IpUser.class);
         Root<IpUser> root = cq.from(IpUser.class);
+        
+        Path<Date> date = root.get(IpUser_.insertDate);
+        
 
         cq.multiselect(
                 root.get(IpUser_.ip), root.get(IpUser_.city), root.get(IpUser_.country), root.get(IpUser_.insertDate),
                 root.get(IpUser_.internetProvider), root.get(IpUser_.latitude), root.get(IpUser_.longitude), 
                 root.get(IpUser_.postal), root.get(IpUser_.region)
-        ).distinct(true);
+        ).distinct(true).orderBy(cb.desc(date));
 
         TypedQuery<IpUser> query = em.createQuery(cq);
 
