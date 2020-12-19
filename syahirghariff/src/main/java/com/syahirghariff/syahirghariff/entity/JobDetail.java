@@ -53,37 +53,37 @@ public class JobDetail implements Serializable {
     @Column(name = "JD_INSERT_DATE")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date insertDate;
-    
+
     public JobDetail() {
     }
-    
-    public static JobDetail create (JobDetail req) {
-        
-        JobDetail jobDetail = new JobDetail(); 
+
+    public static JobDetail create(JobDetail req) {
+
+        JobDetail jobDetail = new JobDetail();
         jobDetail.id = req != null && req.getId() != null ? req.getId() : UUID.randomUUID().toString();
         jobDetail.post = req != null ? Strings.trimToNull(req.getPost()) : null;
-        jobDetail.active = req != null ? req.getActive() : StatusEnum.A; 
+        jobDetail.active = req != null ? req.getActive() : StatusEnum.A;
         jobDetail.insertDate = new Date();
         jobDetail.job = req != null && req.getJob() != null ? req.getJob() : null;
-        
+
         return jobDetail;
     }
-    
-    public static JobDetail display (JobDetail jobDetail) {
-        
+
+    public static JobDetail display(JobDetail jobDetail) {
+
         jobDetail.id = null;
-        jobDetail.insertDate = null; 
+        jobDetail.insertDate = null;
         jobDetail.active = null;
-        
+
         return jobDetail;
     }
-    
+
     public static JobDetail prepare(Job job, JobDetail req) {
-    
+
         JobDetail jobDetail = JobDetail.create(req);
-        jobDetail.job = job != null? job : null;
-        
-        return jobDetail; 
+        jobDetail.job = job != null ? job : null;
+
+        return jobDetail;
     }
 
     public String getId() {
@@ -109,7 +109,7 @@ public class JobDetail implements Serializable {
     public void setPost(String post) {
         this.post = post;
     }
-    
+
     public Date getInsertDate() {
         return insertDate;
     }
@@ -130,6 +130,5 @@ public class JobDetail implements Serializable {
     public String toString() {
         return "JobDetail{" + "id=" + id + ", job=" + job + ", post=" + post + ", active=" + active + ", insertDate=" + insertDate + '}';
     }
-    
-    
+
 }

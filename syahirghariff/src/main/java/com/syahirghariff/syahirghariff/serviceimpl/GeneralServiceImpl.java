@@ -21,6 +21,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GeneralServiceImpl implements GeneralService {
+    
+    // Development
+    //public static final String SVG_FILEPATH = System.getProperty("user.home")+"/workspace/syahir-web/src/assets/sprite.svg";
+    
+    //Production 
+    public static final String SVG_FILEPATH = System.getProperty("user.home")+"web/assets/sprite.svg";
 
     @Autowired
     private GeneralDao generalDao;
@@ -61,7 +67,7 @@ public class GeneralServiceImpl implements GeneralService {
             String svg_string = new String(svg_bytes);
 
             // Generate File 
-            FileOutputStream outputStream = new FileOutputStream(System.getProperty("user.dir") + "/sprite.svg");
+            FileOutputStream outputStream = new FileOutputStream(SVG_FILEPATH);
             byte b[] = svg_string.getBytes();//converting string into byte array    
             outputStream.write(b);
             outputStream.close();

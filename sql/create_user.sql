@@ -1,5 +1,9 @@
 CREATE USER 'SG'@'localhost' IDENTIFIED BY 'password' ; 
 
+// Production
+CREATE USER 'SG'@'localhost' IDENTIFIED BY 'P@$$w0rd' ; 
+
+
 GRANT ALL privileges ON * . * TO 'SG'@'localhost';
 
 
