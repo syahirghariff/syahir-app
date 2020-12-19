@@ -20,4 +20,6 @@ public interface IpUserService {
     public IpUser save(IpUser ipUser);
     
     public List<Ip> findAll(); 
+    
+    public void set (String content);
 }

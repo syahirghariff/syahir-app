@@ -9,9 +9,12 @@ import com.syahirghariff.syahirghariff.dto.Constants;
 import com.syahirghariff.syahirghariff.service.IpUserService;
 import com.syahirghariff.syahirghariff.service.MainUserService;
 import com.syahirghariff.syahirghariff.util.RespUtil;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +41,14 @@ public class IpUserRestController {
         }
         
         return RespUtil.successResponse(ipUserSvc.findAll());
+    }
+    
+    @PostMapping("/set")
+    public ResponseEntity set(@RequestBody String encrypted) {
+        
+        ipUserSvc.set(encrypted);
+    
+        return RespUtil.successResponse(new ArrayList<>());
     }
     
 }
