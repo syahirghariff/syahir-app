@@ -93,8 +93,6 @@ public class IpUserServiceImpl implements IpUserService {
             objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             IpUser ipUser = objectMapper.readValue(content, IpUser.class);
             this.save(ipUser);
-
-            System.out.println("Conten:" + ipUser.toString());
         } catch (Exception ex) {
             Logger.getLogger(IpUserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
