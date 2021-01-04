@@ -10,4 +10,9 @@ public class SyahirghariffApplication {
         SpringApplication.run(SyahirghariffApplication.class, args);
     }
 
+//    @PostConstruct
+//    public void init(){
+//        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kuala_Lumpur"));
+//    }
+
 }

@@ -26,7 +26,7 @@ public class GeneralServiceImpl implements GeneralService {
     //public static final String SVG_FILEPATH = System.getProperty("user.home")+"/workspace/syahir-web/src/assets/sprite.svg";
     
     //Production 
-    public static final String SVG_FILEPATH = System.getProperty("user.home")+"web/assets/sprite.svg";
+    public static final String SVG_FILEPATH = System.getProperty("user.home")+"/web/main/assets/sprite.svg";
 
     @Autowired
     private GeneralDao generalDao;

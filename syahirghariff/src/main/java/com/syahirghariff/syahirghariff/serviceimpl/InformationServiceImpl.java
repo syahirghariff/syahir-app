@@ -45,9 +45,6 @@ public class InformationServiceImpl implements InformationService {
     @Override
     public Information getDisplay() {
         
-        // Get IP of user 
-        ipUserSvc.getUserIp();
-        
         // PROFILE
         List<Profile> profiles = profileSvc.display();
         

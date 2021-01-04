@@ -84,6 +84,7 @@ public class IpUserServiceImpl implements IpUserService {
     }
 
     @Override
+    @Transactional
     public void set(String req) {
 
         try {

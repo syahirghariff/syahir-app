@@ -9,6 +9,7 @@ import com.syahirghariff.syahirghariff.dto.Constants;
 import com.syahirghariff.syahirghariff.service.GeneralService;
 import com.syahirghariff.syahirghariff.service.IpUserService;
 import com.syahirghariff.syahirghariff.util.RespUtil;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,11 @@ public class TestController {
         
         ipUserSvc.getUserIp();
         return RespUtil.successResponse(System.getProperty("user.dir"));
+    }
+    
+    @GetMapping("/api")
+    public ResponseEntity getTest() {
+        return RespUtil.successResponse(new ArrayList<>());
     }
     
 }
